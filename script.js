@@ -255,7 +255,7 @@ Ditunggu konfirmasinya ya bun. Terimakasih!`;
     mobileMenuOverlay.innerHTML = `
         <div class="mobile-menu-content">
             <div class="mobile-menu-header">
-                <span class="brand-name">Mega Bento&trade; Frozen</span>
+                <span class="brand-name">Mega Bento&trade;</span>
                 <button class="mobile-menu-close">&times;</button>
             </div>
             <ul class="mobile-menu-list">
