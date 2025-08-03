@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartCount = document.getElementById('cart-count');
     const cartItems = document.getElementById('cart-items');
     const cartSubtotal = document.getElementById('cart-subtotal');
+    const cartDiscount = document.getElementById('cart-discount');
     const cartTotal = document.getElementById('cart-total');
     const clearCartBtn = document.getElementById('clear-cart');
     const checkoutWhatsAppBtn = document.getElementById('checkout-whatsapp');
@@ -33,10 +34,35 @@ document.addEventListener('DOMContentLoaded', function() {
         cartCount.classList.toggle('hidden', totalItems === 0);
     }
 
+    function calculateDiscount(subtotal) {
+        // Discount tiers based on subtotal
+        if (subtotal >= 100000) {
+            // 15% discount for orders over Rp 100,000
+            return subtotal * 0.15;
+        } else if (subtotal >= 50000) {
+            // 10% discount for orders over Rp 50,000
+            return subtotal * 0.10;
+        } else if (subtotal >= 25000) {
+            // 5% discount for orders over Rp 25,000
+            return subtotal * 0.05;
+        }
+        return 0; // No discount for smaller orders
+    }
+
     function updateCartTotals() {
         const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const discount = calculateDiscount(subtotal);
+        const total = subtotal - discount;
+        
         cartSubtotal.textContent = formatRupiah(subtotal);
-        cartTotal.textContent = formatRupiah(subtotal);
+        cartDiscount.textContent = formatRupiah(discount);
+        cartTotal.textContent = formatRupiah(total);
+        
+        // Show or hide discount row based on whether there's a discount
+        const discountRow = document.querySelector('.discount-row');
+        if (discountRow) {
+            discountRow.style.display = discount > 0 ? 'flex' : 'none';
+        }
     }
 
     function getProductImage(productId) {
@@ -186,16 +212,29 @@ document.addEventListener('DOMContentLoaded', function() {
             `• ${item.name} x${item.quantity} - ${formatRupiah(item.price * item.quantity)}`
         ).join('\n');
 
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const discount = calculateDiscount(subtotal);
+        const total = subtotal - discount;
 
-        return `Halo bun! Saya mau pesan bento. Ini daftar pesanan saya:
+        let message = `Halo bun! Saya mau pesan bento. Ini daftar pesanan saya:
 
 📋 *Rincian Pesanan:*
 ${orderDetails}
 
+💵 *Subtotal: ${formatRupiah(subtotal)}*`;
+
+        // Add discount information if applicable
+        if (discount > 0) {
+            message += `
+🎁 *Diskon: ${formatRupiah(discount)}*`;
+        }
+
+        message += `
 💰 *Total: ${formatRupiah(total)}*
 
 Ditunggu konfirmasinya ya bun. Terimakasih!`;
+
+        return message;
     }
 
     function openCart() {

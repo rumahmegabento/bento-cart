@@ -197,6 +197,38 @@ section {
     background: var(--light-gray);
 }
 
+.discount-banner {
+    background: linear-gradient(135deg, var(--light-purple), var(--primary-purple));
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.discount-banner i {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+}
+
+.discount-info h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.discount-info ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.discount-info li {
+    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+}
+
 .products-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -793,6 +825,16 @@ html {
     color: var(--text-dark);
 }
 
+.discount-row {
+    display: none; /* Hidden by default, shown when there's a discount */
+    color: #e53e3e; /* Red color for discount */
+    font-weight: 500;
+    background-color: rgba(254, 226, 226, 0.5); /* Light red background */
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+}
+
 .total-final {
     font-weight: 600;
     font-size: 1.1rem;
@@ -862,6 +904,17 @@ html {
         right: -100%;
         height: 100vh;
         border-radius: 0;
+    }
+    
+    .discount-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .discount-banner i {
+        margin-right: 0;
+        margin-bottom: 1rem;
     }
     
     .cart-header {
